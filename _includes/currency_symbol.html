@@ -1,0 +1,28 @@
+{% case include.currency %}
+  {% when 'USD' %}
+    ${{ include.amount }}
+  {% when 'EUR' %}
+    €{{ include.amount }}
+  {% when 'GBP' %}
+    £{{ include.amount }}
+  {% when 'JPY' %}
+    ¥{{ include.amount }}
+  {% when 'KRW' %}
+    ₩{{ include.amount }}
+  {% when 'PLN' %}
+    zł{{ include.amount }}
+  {% when 'RUB' %}
+    ₽{{ include.amount }}
+  {% when 'THB' %}
+    ฿{{ include.amount }}
+  {% when 'TRY' %}
+    ₺{{ include.amount }}
+  {% when 'ILS' %}
+    ₪{{ include.amount }}
+  {% when 'BRL' %}
+    R${{ include.amount }}
+  {% when 'SAR' %}
+    ر.س{{ include.amount }}
+  {% else %}
+    {{ include.amount }} {{ include.currency }}
+{% endcase %}

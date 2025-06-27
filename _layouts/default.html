@@ -1,0 +1,27 @@
+---
+layout: compress
+published: true
+---
+
+{% assign current_url = "/" | absolute_url %}
+{% assign sitename = current_url | remove: "http://" | remove: "https://" | remove: ".github.io" | split: "/" | first | upcase %}
+{% assign lang = page.lang | default: site.lang | default: 'en' %}
+{% assign translations = site.data.translations[lang] %}
+
+<!DOCTYPE html>
+<html lang="{{lang}}">
+	<head>
+		{% include head.html %}
+	</head>
+  <body {% if page.encode %}onClick="window.open('https://s.click.aliexpress.com/e/_{{ page.encode }}', '_blank')" {% endif %}>
+		{% include header.html %}
+    <div class="mx-auto min-h-[90vh] max-w-2xl py-4 px-4">
+      {% if page.collection == 'products' %}
+        {% include product.html %}
+      {% else %}
+        {{ content }}
+      {% endif %}
+    </div>
+		{% include footer.html %}
+	</body>
+</html>

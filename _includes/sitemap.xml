@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {% assign max_urls_per_sitemap = 50000 %}
+  {% assign products = site.products %}
+  {% assign start = page.index | times: max_urls_per_sitemap %}
+  {% assign end = start | plus: max_urls_per_sitemap %}
+  
+  {% for product in products %}
+    {% if forloop.index > start and forloop.index <= end %}
+    <url>
+      <loc>{{ site.url }}{{ product.url }}</loc>
+      <lastmod>{{ product.date | date_to_xmlschema }}</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.6</priority>
+    </url>
+    {% endif %}
+  {% endfor %}
+</urlset>

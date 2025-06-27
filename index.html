@@ -1,0 +1,39 @@
+---
+layout: default
+---
+
+<div class="grid gap-3 gap-y-4 grid-cols-3">
+  {% assign max_products = 24 %}
+  {% assign modulus = 3 %}
+
+  {%- assign filtered_products = site.products | where: "lang", "en" -%}
+  {%- assign filtered_products = filtered_products | sort: 'date' | reverse -%}
+  {% assign filtered_productsx = filtered_products | sort: 'encode' %}
+  {% assign product_count = filtered_products | size %}
+  {% assign display_count = product_count %}
+
+  {% if product_count > max_products %}
+    {% assign display_count = max_products %}
+  {% endif %}
+
+  {% assign adjustment = display_count | modulo: modulus %}
+  {% if adjustment != 0 %}
+    {% assign display_count = display_count | minus: adjustment %}
+  {% endif %}
+
+  {% assign count = 0 %}
+  {% for product in filtered_products %}
+    {% if count < display_count %}
+      <a href="/{{product.slug}}" title="{{product.title}}" class="group rounded-xl shadow-md overflow-hidden border">
+        <img src="https://cdn.csgad.com/kf/{{product.image}}_200x200.webp" width="200" height="200" alt="{{product.title}}" class="w-full object-cover object-center group-hover:opacity-75 bg-gray-100" style="color: transparent; display: inline-block;">
+        <h2 class="mx-2 mt-2 text-xs sm:text-sm text-gray-700 line-clamp-2">{{product.title}}</h2>
+        <p class="mx-2 mt-1 mb-4 text-sm sm:text-base font-medium text-gray-800">
+          {% include currency_symbol.html currency=product.currency amount=product.price %}
+        </p>
+      </a>
+      {% assign count = count | plus: 1 %}
+    {% else %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+</div>

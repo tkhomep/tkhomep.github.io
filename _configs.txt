@@ -1,0 +1,51 @@
+# Site Info
+# title:              "latablesjms.github.io"
+# description:        "latablesjms.github.io Personals Page"
+# author_name:        "latablesjms" # change this to your name
+# logo_url:           https://latablesjms.github.io/assets/logo_wrapper.png
+
+# Site Settings
+url:                https://latablesjms.github.io # main url
+baseurl:            /
+# permalink:          /:slug # Post permalink
+timezone:           Asia/Kuala_Lumpur # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+mathjax:            false  # enables support for mathjax - set to 'false' to disable
+social_share_previews: true
+paginate: 10  # Menentukan jumlah postingan per halaman
+paginate_path: "/page:num/"  # Opsi: jalur URL untuk halaman berikutnya
+
+# Site Build
+highlighter:        rouge
+markdown:           kramdown
+kramdown:
+    input:          GFM
+sass:
+    style:          :compressed
+
+# Other Params
+include:            [ "robots.txt" ]
+exclude:            [ "LICENSE", "README.md", "CNAME", "vendor", "Gemfile", "script" ]
+plugins:
+  - jekyll-sitemap
+
+collections:
+  products:
+    output: true  # Jika ingin halaman-halaman ini di-generate sebagai HTML
+    permalink: /:slug  # Contoh permalink sesuai kebutuhan
+
+defaults:
+  -
+    scope:
+      path:         ""
+    values:
+      layout:       "null"
+  # -
+  #   scope:
+  #     type:         "pages"
+  #   values:
+  #     layout:       "page"
+  # -
+  #   scope:
+  #     type:         "posts"
+  #   values:
+  #     layout:       "post"

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {% assign max_urls_per_sitemap = 50000 %}
+  {% assign products = site.products %}
+  {% assign total_products = products | size %}
+  {% assign total_sitemaps = (total_products | divided_by: max_urls_per_sitemap | ceil) %}
+  
+  {% for i in (0..total_sitemaps-1) %}
+  <sitemap>
+    <loc>{{ site.url }}/sitemap{{ i | plus: 1 }}.xml</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+  </sitemap>
+  {% endfor %}
+</sitemapindex>

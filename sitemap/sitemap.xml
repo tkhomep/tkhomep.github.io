@@ -1,0 +1,16 @@
+---
+layout: null
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="{{ '/assets/sitemap.xsl' | relative_url }}"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {%- assign max_urls_per_sitemap = 50000 -%}
+  {%- assign sorted_products = site.products | sort: 'date' | reverse -%}
+  {%- assign product_urls = sorted_products | slice: 0, max_urls_per_sitemap -%}
+  {%- for product in product_urls -%}
+    <url>
+      <loc>{{ product.url | absolute_url }}</loc>
+      <lastmod>{{ product.date | date_to_xmlschema }}</lastmod>
+    </url>
+  {%- endfor -%}
+</urlset>

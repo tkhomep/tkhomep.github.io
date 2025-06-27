@@ -1,0 +1,90 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{% if page.title %}
+	<title>{{ page.title }} · {{ sitename }}</title>
+{% else %}
+	<title>{{ sitename }}</title>
+{% endif %}
+
+<link rel="shortcut icon" href="{{ "/assets/favicon.ico" | prepend: site.baseurl | prepend: site.url }}">
+<link rel="stylesheet" href="{{ "/assets/style.css" | prepend: site.baseurl | prepend: site.url }}">
+<link rel="canonical" href="{{ page.url | prepend: site.baseurl | prepend: site.url }}">
+
+<meta name="robots" content="index, follow">
+{% if page.collection == 'products' %}
+  {% capture currency_symbol %}{% include currency_symbol.html currency=page.currency amount=page.price %}{% endcapture %}
+  {% assign description = translations.buy | append: " " | append: currency_symbol | append: " " | append: page.title %}
+  <meta name="description" content="{% if page.title %}{{ description | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ translations.description }}{% endif %}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{page.title}}">
+  <meta name="twitter:description" content="{% if page.title %}{{ description | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ translations.description }}{% endif %}">
+  <meta name="twitter:image" content="https://cdn.csgad.com/kf/{{page.image}}">
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="{{page.title}}">
+  <meta property="og:description" content="{% if page.title %}{{ description | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ translations.description }}{% endif %}">
+  <meta property="og:image" content="https://cdn.csgad.com/kf/{{page.image}}">
+  <meta property="og:url" content="{{ page.url | prepend: site.baseurl | prepend: site.url }}">
+  <meta property="og:site_name" content="{{site.title}}">
+  <meta property="product:price:amount" content="{{page.price}}">
+  <meta property="product:price:currency" content="{{page.currency}}">
+  <meta property="og:availability" content="instock">
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "{{ page.title | escape }}",
+      "image": [{% for img in page.images %}"https://cdn.csgad.com/kf/{{ img }}"{% if forloop.last == false %}, {% endif %}{% endfor %}],
+      "description": "{{ description }}",
+      "sku": "{{ page.encode }}",
+      "offers": {
+        "@type": "Offer",
+        "url": "{{ page.url | relative_url }}",
+        "priceCurrency": "{{ page.currency }}",
+        "price": "{{ page.price }}",
+        "priceValidUntil": "2098-12-31",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "{{ site.title }}"
+        }
+      }{% if page.volume > 0 %},
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "{{ page.rating }}",
+        "reviewCount": "{{ page.volume }}"
+      }{% endif %}
+    }, {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "{{ translations.home }}",
+          "item": "{{ "/" | absolute_url }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "{{ page.categories[0].name | escape }}",
+          "item": "{{ "/category/" | append: page.categories[0].slug | append: "/" | absolute_url }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{{ page.categories[1].name | escape }}",
+          "item": "{{ "/category/" | append: page.categories[1].slug | append: "/" | absolute_url }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "{{ page.title | escape }}",
+          "item": "{{ page.url | absolute_url }}"
+        }
+      ]
+    }
+  ]
+  </script>
+{% endif %}
