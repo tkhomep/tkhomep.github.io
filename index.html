@@ -6,7 +6,7 @@ layout: default
   {% assign max_products = 24 %}
   {% assign modulus = 3 %}
 
-  {%- assign filtered_products = site.products | where: "lang", "en" -%}
+<!--   {%- assign filtered_products = site.products | where: "lang", "en" -%} -->
   {%- assign filtered_products = filtered_products | sort: 'date' | reverse -%}
   {% assign filtered_productsx = filtered_products | sort: 'encode' %}
   {% assign product_count = filtered_products | size %}
