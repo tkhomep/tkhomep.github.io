@@ -1,0 +1,1 @@
+Jika model tidak patuh template, beri feedback dan ingatkan kembali ke struktur yang diminta
